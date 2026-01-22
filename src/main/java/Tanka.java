@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Tanka {
     public static void main(String[] args) {
@@ -22,8 +21,9 @@ public class Tanka {
             System.out.println("____________________________________________________________");
         
             Scanner scanner = new Scanner(System.in);
+            Task[] tasks = new Task[100];
+            int taskCount = 0;
             String userInput = ""; // Initialize userInput with an empty string
-            ArrayList<String> tasks = new ArrayList<>();
         
             while (true) {
                 userInput = scanner.nextLine(); // Read user input from the console
@@ -35,18 +35,39 @@ public class Tanka {
                         break;
                 }
 
-                if (userInput.equals("list")) {
+                else if (userInput.equals("list")) {
                     System.out.println("____________________________________________________________");
-                    int count = 1;
-                    for (String task : tasks) {
-                        System.out.println(" " + count + ". " + task);
-                        count++;
+                    for (int i = 0; i < taskCount; i++) {
+                        System.out.println(" " + (i + 1) + ". " + tasks[i].toString());
                     }
                     System.out.println("____________________________________________________________");
+                }
+
+                else if (userInput.startsWith("mark")) {
+                    String[] parts = userInput.split(" ");
+                    int taskNumber = Integer.parseInt(parts[1]) - 1; 
+                    tasks[taskNumber].markAsDone();
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" Nice! I've marked this task as done:");
+                    System.out.println("  " + tasks[taskNumber].toString());
+                    System.out.println("____________________________________________________________");
+                }
+
+                else if (userInput.startsWith("unmark")) {
+                    String[] parts = userInput.split(" ");
+                    int taskNumber = Integer.parseInt(parts[1]) - 1; 
+                    tasks[taskNumber].markAsUndone();
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" OK, I've marked this task as not done yet:");
+                    System.out.println("  " + tasks[taskNumber].toString());
+                    System.out.println("____________________________________________________________");
+                }
 
                 //For all other inputs, added it to the task list
-                } else {
-                    tasks.add(userInput);
+                else {
+                    Task newTask = new Task(userInput);
+                    tasks[taskCount] = newTask;
+                    taskCount++;
                     System.out.println("____________________________________________________________");
                     System.out.println(" added: " + userInput); // Echo the user's input with proper spacing
                     System.out.println("____________________________________________________________");
