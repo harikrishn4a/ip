@@ -25,7 +25,7 @@ public class Tanka {
             int taskCount = 0;
             String userInput = ""; // Initialize userInput with an empty string
         
-            while (true) {
+            while (scanner.hasNextLine()) {
                 userInput = scanner.nextLine(); // Read user input from the console
 
                 if (userInput.equals("bye")) {
@@ -63,56 +63,22 @@ public class Tanka {
                     System.out.println("____________________________________________________________");
                 }
 
-                else if (userInput.startsWith("todo ")) {
-                    String desc = userInput.substring(5).trim();
-                    tasks[taskCount] = new Todo(desc);
-                    System.out.println("____________________________________________________________");
-                    System.out.println("  Got it. I've added this task:");
-                    System.out.println("  " + tasks[taskCount].toString());
-                    taskCount++;
-                    System.out.println("  Now you have " + taskCount + " tasks in the list.");
-                    System.out.println("____________________________________________________________");
-                    
-                }
-
-                else if (userInput.startsWith("deadline ")) {
-                    String actual = userInput.substring(9).trim();
-                    String[] parts = actual.split("/by", 2);
-                    String desc = parts[0].trim();
-                    String due = parts[1].trim();
-                    tasks[taskCount] = new Deadline(desc, due);
-                    System.out.println("____________________________________________________________");
-                    System.out.println("  Got it. I've added this task:");
-                    System.out.println("  " + tasks[taskCount].toString());
-                    taskCount++;
-                    System.out.println("  Now you have " + taskCount + " tasks in the list.");
-                    System.out.println("____________________________________________________________");
-                }
-
-                else if (userInput.startsWith("event ")) {
-                    String actual = userInput.substring(6).trim();
-                    String[] parts = actual.split("/from", 2);
-                    String desc = parts[0].trim();
-                    String[] subParts = parts[1].split("/to", 2);
-                    String start = subParts[0].trim();
-                    String end = subParts[1].trim();
-                    tasks[taskCount] = new Event(desc, start, end);
-                    System.out.println("____________________________________________________________");
-                    System.out.println("  Got it. I've added this task:");
-                    System.out.println("  " + tasks[taskCount].toString());
-                    taskCount++;
-                    System.out.println("  Now you have " + taskCount + " tasks in the list.");
-                    System.out.println("____________________________________________________________");
-                }
-
                 //For all other inputs, added it to the task list
                 else {
-                    Task newTask = new Task(userInput);
-                    tasks[taskCount] = newTask;
-                    taskCount++;
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" added: " + userInput); 
-                    System.out.println("____________________________________________________________");
+                    try {
+                        Task newTask = Parser.parseTask(userInput);
+                        tasks[taskCount] = newTask;
+                        System.out.println("____________________________________________________________");
+                        System.out.println("  Got it. I've added this task:");
+                        System.out.println("  " + tasks[taskCount]);
+                        taskCount++;
+                        System.out.println("  Now you have " + taskCount + " tasks in the list.");
+                        System.out.println("____________________________________________________________");
+                    } catch(TankaException e) {
+                        System.out.println("____________________________________________________________");
+                        System.out.println("  " + e.getMessage());
+                        System.out.println("____________________________________________________________");
+                    }
                 }
             }
             scanner.close();
