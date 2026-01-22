@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Tanka {
     public static void main(String[] args) {
@@ -12,7 +13,7 @@ public class Tanka {
                 "\n" +
                 "     J A H A R I\n" +
                 "\n" +
-                "but i would never order a full pizza 🍕 for myself";
+                "but i would never order a WHOLE pizza 🍕 for myself";
                
             System.out.println("Hello! I'm \n" + logo);
             System.out.println("____________________________________________________________");
@@ -21,8 +22,7 @@ public class Tanka {
             System.out.println("____________________________________________________________");
         
             Scanner scanner = new Scanner(System.in);
-            Task[] tasks = new Task[100];
-            int taskCount = 0;
+            ArrayList<Task> tasks = new ArrayList<>();
             String userInput = ""; // Initialize userInput with an empty string
         
             while (scanner.hasNextLine()) {
@@ -37,8 +37,12 @@ public class Tanka {
 
                 else if (userInput.equals("list")) {
                     System.out.println("____________________________________________________________");
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println(" " + (i + 1) + ". " + tasks[i].toString());
+                    if (tasks.isEmpty()) {
+                        System.out.println("  You have no tasks in your list.");
+                    } else {
+                        for (int i = 0; i < tasks.size(); i++) {
+                            System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
+                        }
                     }
                     System.out.println("____________________________________________________________");
                 }
@@ -46,33 +50,62 @@ public class Tanka {
                 else if (userInput.startsWith("mark")) {
                     String[] parts = userInput.split(" ");
                     int taskNumber = Integer.parseInt(parts[1]) - 1; 
-                    tasks[taskNumber].markAsDone();
+                    tasks.get(taskNumber).markAsDone();
                     System.out.println("____________________________________________________________");
                     System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("  " + tasks[taskNumber].toString());
+                    System.out.println("  " + tasks.get(taskNumber).toString());
                     System.out.println("____________________________________________________________");
                 }
 
                 else if (userInput.startsWith("unmark")) {
                     String[] parts = userInput.split(" ");
                     int taskNumber = Integer.parseInt(parts[1]) - 1; 
-                    tasks[taskNumber].markAsUndone();
+                    tasks.get(taskNumber).markAsUndone();
                     System.out.println("____________________________________________________________");
                     System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("  " + tasks[taskNumber].toString());
+                    System.out.println("  " + tasks.get(taskNumber).toString());
                     System.out.println("____________________________________________________________");
+                }
+
+                else if (userInput.startsWith("delete")) {
+                    try {
+                        //Get the integer index
+                        String[] components = userInput.split(" ");
+                        int indexOfDeletion = Integer.parseInt(components[1]) - 1;
+
+                        //Check bound validity
+                        if (indexOfDeletion < 0 || indexOfDeletion >= tasks.size()) {
+                            throw new TankaException("This task number does not exist!");
+                        }
+
+                        Task deletedTask = tasks.remove(indexOfDeletion);
+                        System.out.println("____________________________________________________________");
+                        System.out.println("  Noted. I've removed this task:");
+                        System.out.println("   " + deletedTask);
+                        System.out.println("  Now you have " + tasks.size() + " tasks in the list.");
+                        System.out.println("____________________________________________________________");
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("____________________________________________________________");
+                        System.out.println("  Please provide a valid task number.");
+                        System.out.println("____________________________________________________________");
+                    } catch (TankaException e) {
+                        System.out.println("____________________________________________________________");
+                        System.out.println("  " + e.getMessage());
+                        System.out.println("____________________________________________________________");
+
+                    }
                 }
 
                 //For all other inputs, added it to the task list
                 else {
                     try {
                         Task newTask = Parser.parseTask(userInput);
-                        tasks[taskCount] = newTask;
+                        tasks.add(newTask);
                         System.out.println("____________________________________________________________");
                         System.out.println("  Got it. I've added this task:");
-                        System.out.println("  " + tasks[taskCount]);
-                        taskCount++;
-                        System.out.println("  Now you have " + taskCount + " tasks in the list.");
+                        System.out.println("  " + newTask);
+                        System.out.println("  Now you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                     } catch(TankaException e) {
                         System.out.println("____________________________________________________________");
