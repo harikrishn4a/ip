@@ -20,11 +20,16 @@ then
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Duke < input.txt > ACTUAL.TXT
+java -classpath ../bin Tanka < input.txt > ACTUAL.TXT
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
-dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
+if command -v dos2unix > /dev/null 2>&1; then
+    dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
+else
+    # If dos2unix is not available, use sed to convert line endings
+    sed -i '' 's/\r$//' ACTUAL.TXT EXPECTED-UNIX.TXT 2>/dev/null || sed -i 's/\r$//' ACTUAL.TXT EXPECTED-UNIX.TXT 2>/dev/null || true
+fi
 
 # compare the output to the expected output
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
