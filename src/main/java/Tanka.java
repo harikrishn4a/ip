@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Tanka {
     public static void main(String[] args) {
@@ -22,17 +23,32 @@ public class Tanka {
         
             Scanner scanner = new Scanner(System.in);
             String userInput = ""; // Initialize userInput with an empty string
+            ArrayList<String> tasks = new ArrayList<>();
         
             while (true) {
                 userInput = scanner.nextLine(); // Read user input from the console
+
                 if (userInput.equals("bye")) {
                     System.out.println("____________________________________________________________");
                     System.out.println(" Bye. Hope to see you again soon!");
                     System.out.println("____________________________________________________________");
                         break;
-                } else {
+                }
+
+                if (userInput.equals("list")) {
                     System.out.println("____________________________________________________________");
-                    System.out.println(" " + userInput); // Echo the user's input with proper spacing
+                    int count = 1;
+                    for (String task : tasks) {
+                        System.out.println(" " + count + ". " + task);
+                        count++;
+                    }
+                    System.out.println("____________________________________________________________");
+
+                //For all other inputs, added it to the task list
+                } else {
+                    tasks.add(userInput);
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" added: " + userInput); // Echo the user's input with proper spacing
                     System.out.println("____________________________________________________________");
                 }
             }
