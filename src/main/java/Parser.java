@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Parser {
     public static Task parseTask(String userInput) throws TankaException {
         if (userInput.startsWith("todo")) {
@@ -13,7 +15,7 @@ public class Parser {
     private static Task parseTodo(String userInput) throws TankaException {
         if (userInput.length() <= 4) { 
         throw new TankaException("The description of a todo task cannot be empty!");
-    }
+        }
         String desc = userInput.substring(5).trim();
         if (desc.isEmpty()) {
             throw new TankaException("The description of a todo task cannot be empty!");
@@ -28,7 +30,7 @@ public class Parser {
 
         String rest = userInput.substring(9).trim();
         if (!rest.contains("/by")) {
-            throw new TankaException("A deadline task must have a /by <time>!");
+            throw new TankaException("A deadline task must have aa d /by <time>!");
         }
 
         String[] parts = rest.split("/by",2);
@@ -47,7 +49,7 @@ public class Parser {
         if (userInput.length() <= 6) { // "todo" or shorter
         throw new TankaException("The description of an event task cannot be empty!");
         }
-        
+
         String rest = userInput.substring(6).trim();
     
         if (!rest.contains("/from") || !rest.contains("/to")) {
@@ -81,5 +83,48 @@ public class Parser {
     
         return new Event(desc, start, end);
     }
-    
+
+    /**
+     * Parses a line from the storage file into a Task.
+     * Format: T|0|desc  or  D|0|desc|dueBy  or  E|0|desc|start|end
+     * @param line
+     * @return
+     * @throws TankaException
+     */
+    public static Task parseFromFile(String line) throws TankaException {
+        // Split exactly on " | " and preserve empty fields
+        String[] parts = line.split(" \\|", -1);
+        if (parts.length < 3) {
+            throw new TankaException("Invalid format in data file.");
+        }
+        // Store as variables
+        String type = parts[0].trim();
+        int isDone = Integer.parseInt(parts[1].trim());
+        String description = parts[2].trim();
+        
+        Task task;
+        if (type.equals("T")) {
+            task = new Todo(description);
+        } else if (type.equals("D")) {
+            if (parts.length < 4) {
+                throw new TankaException("Invalid Deadline format in data file.");
+            }
+            String dueBy = parts[3].trim();
+            task = new Deadline(description, dueBy);
+        } else if (type.equals("E")) {
+            if (parts.length < 5) {
+                throw new TankaException("Invalid Event format in data file.");
+            }
+            String start = parts[3].trim();
+            String end = parts[4].trim();
+            task = new Event(description, start, end);
+        } else {
+            throw new TankaException("Undefined Task type declared in file.");
+        }
+        if (isDone == 1) {
+            task.markAsDone();
+        }
+        return task;
+    }
 }
+    
