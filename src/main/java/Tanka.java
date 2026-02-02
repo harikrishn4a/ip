@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
 
 public class Tanka {
     public static void main(String[] args) {
@@ -17,12 +18,21 @@ public class Tanka {
                
             System.out.println("Hello! I'm \n" + logo);
             System.out.println("____________________________________________________________");
-            System.out.println(" Hello! I'm Tanka Jihari");
+            System.out.println(" Hello! I'm Tanka Jahari");
             System.out.println(" What can I do for you?");
             System.out.println("____________________________________________________________");
         
             Scanner scanner = new Scanner(System.in);
-            ArrayList<Task> tasks = new ArrayList<>();
+
+            // Loads tasks from file on startup
+            Storage storage = new Storage("data" + File.separator + "tanka.txt");
+            ArrayList<Task> tasks;
+            try {
+                tasks = storage.loadTasks();
+            } catch (TankaException e) {
+                System.out.println("  " + e.getMessage() + " Starting with empty list.");
+                tasks = new ArrayList<>();
+            }
             String userInput = ""; // Initialize userInput with an empty string
         
             while (scanner.hasNextLine()) {
@@ -51,6 +61,13 @@ public class Tanka {
                     String[] parts = userInput.split(" ");
                     int taskNumber = Integer.parseInt(parts[1]) - 1; 
                     tasks.get(taskNumber).markAsDone();
+                    try {
+                        storage.saveTasks(tasks);
+                    } catch (TankaException e) {
+                        System.out.println("____________________________________________________________");
+                        System.out.println("  Failed to save: " + e.getMessage());
+                        System.out.println("____________________________________________________________");
+                    }
                     System.out.println("____________________________________________________________");
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("  " + tasks.get(taskNumber).toString());
@@ -61,6 +78,13 @@ public class Tanka {
                     String[] parts = userInput.split(" ");
                     int taskNumber = Integer.parseInt(parts[1]) - 1; 
                     tasks.get(taskNumber).markAsUndone();
+                    try {
+                        storage.saveTasks(tasks);
+                    } catch (TankaException e) {
+                        System.out.println("____________________________________________________________");
+                        System.out.println("  Failed to save: " + e.getMessage());
+                        System.out.println("____________________________________________________________");
+                    }
                     System.out.println("____________________________________________________________");
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks.get(taskNumber).toString());
@@ -84,7 +108,13 @@ public class Tanka {
                         System.out.println("   " + deletedTask);
                         System.out.println("  Now you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
-
+                        try {
+                            storage.saveTasks(tasks);
+                        } catch (TankaException e) {
+                            System.out.println("____________________________________________________________");
+                            System.out.println("  Failed to save: " + e.getMessage());
+                            System.out.println("____________________________________________________________");
+                        }
                     } catch (NumberFormatException e) {
                         System.out.println("____________________________________________________________");
                         System.out.println("  Please provide a valid task number.");
@@ -102,6 +132,13 @@ public class Tanka {
                     try {
                         Task newTask = Parser.parseTask(userInput);
                         tasks.add(newTask);
+                        try {
+                            storage.saveTasks(tasks);
+                        } catch (TankaException e) {
+                            System.out.println("____________________________________________________________");
+                            System.out.println("  Failed to save: " + e.getMessage());
+                            System.out.println("____________________________________________________________");
+                        }
                         System.out.println("____________________________________________________________");
                         System.out.println("  Got it. I've added this task:");
                         System.out.println("  " + newTask);
