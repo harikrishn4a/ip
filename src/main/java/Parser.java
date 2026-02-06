@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
     public static Task parseTask(String userInput) throws TankaException {
@@ -36,13 +38,17 @@ public class Parser {
         String[] parts = rest.split("/by",2);
         String desc = parts[0].trim();
         String dueBy = parts[1].trim();
+
         if (desc.isEmpty()) {
             throw new TankaException("The description of a deadline task cannot be empty!");
         }
-        if (dueBy.isEmpty()) {
-            throw new TankaException("The duedate of a deadline task cannot be empty!");
+
+        try {
+            LocalDate dueDate = LocalDate.parse(dueBy.trim());
+            return new Deadline(desc, dueDate);
+        } catch (DateTimeParseException e) {
+            throw new TankaException("Invalid date. Use yyyy-mm-dd");
         }
-        return new Deadline(desc, dueBy);
     }
 
     private static Task parseEvent(String userInput) throws TankaException {
@@ -109,8 +115,14 @@ public class Parser {
             if (parts.length < 4) {
                 throw new TankaException("Invalid Deadline format in data file.");
             }
-            String dueBy = parts[3].trim();
-            task = new Deadline(description, dueBy);
+            try {
+                String dueBy = parts[3].trim();
+                LocalDate dueDate = LocalDate.parse(dueBy);
+                task = new Deadline(description, dueDate);
+            } catch (DateTimeParseException e) {
+                throw new TankaException("Invalid date format!");
+            }
+            
         } else if (type.equals("E")) {
             if (parts.length < 5) {
                 throw new TankaException("Invalid Event format in data file.");

@@ -27,6 +27,6 @@ public abstract class Task {
         return " [" + getStatusIcon() + "] " + description;
     }
 
+    // Abstract method to write to file
     public abstract String toFileString();
-
 }
