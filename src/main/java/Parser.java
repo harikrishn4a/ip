@@ -1,8 +1,47 @@
 import java.util.ArrayList;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
+
+    public static Command parse(String fullCommand) throws TankaException {
+        String trimmed = fullCommand.trim();
+
+        if (trimmed.equals("bye")) {
+            return new ExitCommand();
+        } else if (trimmed.equals("list")) {
+            return new ListCommand();
+        } else if (trimmed.startsWith("mark ")) {
+            int index = parseIndex(trimmed.substring(5), "mark");
+            return new MarkCommand(index);
+        } else if (trimmed.startsWith("unmark ")) {
+            int index = parseIndex(trimmed.substring(7), "unmark");
+            return new UnmarkCommand(index);
+        } else if (trimmed.startsWith("delete ")) {
+            int index = parseIndex(trimmed.substring(7), "delete");
+            return new DeleteCommand(index);
+        } else if (trimmed.startsWith("todo") || trimmed.startsWith("deadline") || trimmed.startsWith("event")) {
+            return new AddCommand(trimmed);
+        } else {
+            throw new TankaException("Sorry I don't understand what you mean!");
+        }
+    }
+
+    private static int parseIndex(String str, String commandName) throws TankaException {
+        if (str.isEmpty()) {
+            throw new TankaException("Please provide a valid task number.");
+        }
+        try {
+            int oneBased = Integer.parseInt(str);
+            if (oneBased < 1) {
+                throw new TankaException("Please provide a valid task number.");
+            }
+            return oneBased - 1;
+        } catch (NumberFormatException e) {
+            throw new TankaException("Please provide a valid task number.");
+        }
+    }
     public static Task parseTask(String userInput) throws TankaException {
         if (userInput.startsWith("todo")) {
             return parseTodo(userInput);
