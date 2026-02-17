@@ -19,6 +19,7 @@ public class Storage {
      * @param filePath path to the data file
      */
     public Storage(String filePath) {
+        assert filePath != null && !filePath.isEmpty() : "file path must not be null or empty";
         this.filePath = filePath;
     }
 
@@ -61,6 +62,8 @@ public class Storage {
      * @throws TankaException if writing fails
      */
     public void saveTasks(ArrayList<Task> tasks) throws TankaException {
+        assert tasks != null : "task list must not be null";
+        // Get File and parent dir, use FileWriter to write it
         try {
             File file = new File(filePath);
             ensureParentDirExists(file);

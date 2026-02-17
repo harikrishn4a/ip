@@ -18,6 +18,7 @@ public class AddCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws TankaException {
         Task newTask = Parser.parseTask(userInput);
+        assert newTask != null : "parseTask must return a non-null task";
         tasks.add(newTask);
         ui.showAdded(newTask, tasks.size());
 

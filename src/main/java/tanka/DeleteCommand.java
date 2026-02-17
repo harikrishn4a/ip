@@ -20,7 +20,6 @@ public class DeleteCommand extends Command {
         if (index < 0 || index >= tasks.size()) {
             throw new TankaException("This task number does not exist!");
         }
-
         Task deletedTask = tasks.remove(index);
         ui.showDeleted(deletedTask, tasks.size());
 
