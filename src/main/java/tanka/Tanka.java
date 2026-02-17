@@ -10,6 +10,13 @@ public class Tanka {
     private Ui ui;
 
     /**
+     * Creates a Tanka instance with the default data file (for JavaFX GUI).
+     */
+    public Tanka() {
+        this("data/tasks.txt");
+    }
+
+    /**
      * Creates a Tanka instance and loads tasks from the given file path.
      * If loading fails, starts with an empty task list and shows a loading error.
      *
@@ -49,6 +56,35 @@ public class Tanka {
             }
         }
         ui.close();
+    }
+
+    /**
+     * Returns the welcome message shown when the GUI starts (same text as the CLI welcome).
+     *
+     * @return the welcome string for the GUI
+     */
+    public String getWelcomeMessage() {
+        GuiUi guiUi = new GuiUi();
+        guiUi.showWelcome();
+        return guiUi.getResponseAndClear();
+    }
+
+    /**
+     * Generates a response for the given user input for use in the GUI.
+     * Parses the input, executes the command, and returns the response string.
+     *
+     * @param input raw user command (e.g. "list", "todo read book")
+     * @return the response string to show in the chat, or error message if parsing/execution fails
+     */
+    public String getResponse(String input) {
+        GuiUi guiUi = new GuiUi();
+        try {
+            Command c = Parser.parse(input);
+            c.execute(tasks, guiUi, storage);
+            return guiUi.getResponseAndClear();
+        } catch (TankaException e) {
+            return e.getMessage();
+        }
     }
 
     /**
