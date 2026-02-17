@@ -23,6 +23,9 @@ public class Parser {
         } else if (trimmed.startsWith("delete ")) {
             int index = parseIndex(trimmed.substring(7), "delete");
             return new DeleteCommand(index);
+        } else if (trimmed.startsWith("find ")) {
+            String keyword = trimmed.substring(5).trim();
+            return new FindCommand(keyword);
         } else if (trimmed.startsWith("todo") || trimmed.startsWith("deadline") || trimmed.startsWith("event")) {
             return new AddCommand(trimmed);
         } else {
