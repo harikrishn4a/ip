@@ -75,6 +75,18 @@ public class GuiUi extends Ui {
     }
 
     @Override
+    public void showReminders(ArrayList<Task> tasks) {
+        output.append(" Here are your upcoming deadlines:\n");
+        if (tasks.isEmpty()) {
+            output.append("  No upcoming deadlines.\n");
+        } else {
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> output.append(" ").append(i + 1).append(". ")
+                            .append(tasks.get(i).toString()).append("\n"));
+        }
+    }
+
+    @Override
     public void showBye() {
         output.append(" Bye. Hope to see you again soon!\n");
     }
