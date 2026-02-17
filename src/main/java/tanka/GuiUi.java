@@ -52,13 +52,6 @@ public class GuiUi extends Ui {
 
     @Override
     public void showTaskList(TaskList tasks) {
-        if (tasks.isEmpty()) {
-            output.append("  You have no tasks in your list.\n");
-        } else {
-            IntStream.range(0, tasks.size())
-                    .forEach(i -> output.append(" ").append(i + 1).append(". ")
-                            .append(tasks.get(i).toString()).append("\n"));
-        }
         showTaskList(tasks.getList());
     }
 

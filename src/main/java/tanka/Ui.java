@@ -109,12 +109,6 @@ public class Ui {
      * @param tasks the TaskList to display
      */
     public void showTaskList(TaskList tasks) {
-        if (tasks.isEmpty()) {
-            System.out.println("  You have no tasks in your list.");
-        } else {
-            IntStream.range(0, tasks.size())
-                    .forEach(i -> System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString()));
-        }
         showTaskList(tasks.getList());
     }
 
