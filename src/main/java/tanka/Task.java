@@ -23,7 +23,7 @@ public abstract class Task {
     }
 
     /** Returns the task description. */
-    public String getStatusDecription() {
+    public String getStatusDescription() {
         return description;
     }
 

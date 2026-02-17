@@ -24,9 +24,17 @@ public class FindCommand extends Command {
         ArrayList<Task> all = tasks.getList();
         ArrayList<Task> matching = new ArrayList<>();
         String lowerKeyword = keyword.toLowerCase();
+<<<<<<< HEAD
         ArrayList<Task> matching = tasks.getList().stream()
                 .filter(task -> task.getStatusDecription().toLowerCase().contains(lowerKeyword))
                 .collect(Collectors.toCollection(ArrayList::new));
+=======
+        for (Task task : all) {
+            if (task.getStatusDescription().toLowerCase().contains(lowerKeyword)) {
+                matching.add(task);
+            }
+        }
+>>>>>>> master
         ui.showMatchingTasks(matching);
     }
 }
