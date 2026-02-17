@@ -48,6 +48,12 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_findKeyword_returnsFindCommand() throws TankaException {
+        Command c = Parser.parse("find book");
+        assertInstanceOf(FindCommand.class, c);
+    }
+
+    @Test
     public void parse_trimmedInput_acceptsWhitespace() throws TankaException {
         Command c = Parser.parse("  list  ");
         assertInstanceOf(ListCommand.class, c);

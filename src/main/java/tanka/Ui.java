@@ -71,6 +71,22 @@ public class Ui {
         }
     }
 
+    /**
+     * Shows the "find" results: header then numbered list of matching tasks, or a no-match message.
+     *
+     * @param tasks list of tasks that matched the search keyword
+     */
+    public void showMatchingTasks(ArrayList<Task> tasks) {
+        System.out.println(" Here are the matching tasks in your list:");
+        if (tasks.isEmpty()) {
+            System.out.println("  No matching tasks.");
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
+            }
+        }
+    }
+
     public void showBye() {
         System.out.println(" Bye. Hope to see you again soon!");
     }
