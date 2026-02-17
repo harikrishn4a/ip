@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * Loads and saves tasks to a text file using {@link Parser#parseFromFile} and {@link Task#toFileString}.
@@ -68,8 +69,12 @@ public class Storage {
             File file = new File(filePath);
             ensureParentDirExists(file);
             FileWriter writer = new FileWriter(file);
-            for (Task task : tasks) {
-                writer.write(task.toFileString() + System.lineSeparator());
+            String content = tasks.stream()
+                    .map(Task::toFileString)
+                    .collect(Collectors.joining(System.lineSeparator()));
+            writer.write(content);
+            if (!tasks.isEmpty()) {
+                writer.write(System.lineSeparator());
             }
             writer.close();
         } catch (IOException e) {

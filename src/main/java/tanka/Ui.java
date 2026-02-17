@@ -3,6 +3,7 @@ package tanka;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 /**
  * Handles all user interaction: reading commands and printing messages.
@@ -97,9 +98,8 @@ public class Ui {
         if (tasks.isEmpty()) {
             System.out.println("  You have no tasks in your list.");
         } else {
-            for (int i = 0; i < tasks.size(); i++) {
-                System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
-            }
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString()));
         }
     }
 
@@ -109,7 +109,16 @@ public class Ui {
      * @param tasks the TaskList to display
      */
     public void showTaskList(TaskList tasks) {
+<<<<<<< HEAD
+        if (tasks.isEmpty()) {
+            System.out.println("  You have no tasks in your list.");
+        } else {
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString()));
+        }
+=======
         showTaskList(tasks.getList());
+>>>>>>> master
     }
 
     /**
@@ -131,9 +140,8 @@ public class Ui {
         if (tasks.isEmpty()) {
             System.out.println("  No matching tasks.");
         } else {
-            for (int i = 0; i < tasks.size(); i++) {
-                System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
-            }
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString()));
         }
     }
 

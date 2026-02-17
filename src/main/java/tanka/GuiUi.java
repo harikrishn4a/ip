@@ -1,6 +1,7 @@
 package tanka;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 /**
  * UI implementation that captures all output to a StringBuilder for use in the GUI.
@@ -43,15 +44,25 @@ public class GuiUi extends Ui {
         if (tasks.isEmpty()) {
             output.append("  You have no tasks in your list.\n");
         } else {
-            for (int i = 0; i < tasks.size(); i++) {
-                output.append(" ").append(i + 1).append(". ").append(tasks.get(i).toString()).append("\n");
-            }
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> output.append(" ").append(i + 1).append(". ")
+                            .append(tasks.get(i).toString()).append("\n"));
         }
     }
 
     @Override
     public void showTaskList(TaskList tasks) {
+<<<<<<< HEAD
+        if (tasks.isEmpty()) {
+            output.append("  You have no tasks in your list.\n");
+        } else {
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> output.append(" ").append(i + 1).append(". ")
+                            .append(tasks.get(i).toString()).append("\n"));
+        }
+=======
         showTaskList(tasks.getList());
+>>>>>>> master
     }
 
     @Override
@@ -60,9 +71,9 @@ public class GuiUi extends Ui {
         if (tasks.isEmpty()) {
             output.append("  No matching tasks.\n");
         } else {
-            for (int i = 0; i < tasks.size(); i++) {
-                output.append(" ").append(i + 1).append(". ").append(tasks.get(i).toString()).append("\n");
-            }
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> output.append(" ").append(i + 1).append(". ")
+                            .append(tasks.get(i).toString()).append("\n"));
         }
     }
 
