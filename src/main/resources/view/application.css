@@ -1,0 +1,36 @@
+/* Chat container: padding and consistent spacing */
+#dialogContainer {
+    -fx-padding: 12 14 12 14;
+    -fx-spacing: 6;
+}
+
+/* Bubble base: padding and line spacing for readability */
+.dialog-box .label {
+    -fx-padding: 10 14 10 14;
+    -fx-background-radius: 12;
+    -fx-background-color: #f0f0f0;
+    -fx-font-size: 13px;
+    -fx-line-spacing: 2px;
+    -fx-wrap-text: true;
+}
+
+/* Tanka/duke messages: subtle green tint, monospace so numbered lists align (1, 2, 3) */
+.dialog-box.duke .label {
+    -fx-background-color: #e8f5e9;
+    -fx-font-family: monospace;
+}
+
+/* User messages: subtle blue tint */
+.dialog-box.user .label {
+    -fx-background-color: #e3f2fd;
+}
+
+/* ScrollPane: remove default border, light background */
+.scroll-pane {
+    -fx-background-color: #fafafa;
+    -fx-background-insets: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
