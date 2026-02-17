@@ -1,6 +1,7 @@
 package tanka;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Wrapper around a list of {@link Task} items with indexed access and mutators.
@@ -14,7 +15,16 @@ public class TaskList {
     }
 
     /**
-     * Creates a task list containing the given tasks.
+     * Creates a task list containing the given tasks (varargs).
+     *
+     * @param tasks initial tasks (zero or more)
+     */
+    public TaskList(Task... tasks) {
+        this.tasks = new ArrayList<>(Arrays.asList(tasks));
+    }
+
+    /**
+     * Creates a task list containing the given tasks from a list.
      *
      * @param tasks initial tasks (can be empty)
      */

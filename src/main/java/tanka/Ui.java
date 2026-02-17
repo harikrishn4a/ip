@@ -1,6 +1,7 @@
 package tanka;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -78,6 +79,15 @@ public class Ui {
     }
 
     /**
+     * Prints a numbered list of tasks (varargs), or a message if none given.
+     *
+     * @param tasks zero or more tasks to display
+     */
+    public void showTaskList(Task... tasks) {
+        showTaskList(new ArrayList<>(Arrays.asList(tasks)));
+    }
+
+    /**
      * Prints a numbered list of tasks, or a message if the list is empty.
      *
      * @param tasks the list of tasks to display
@@ -105,6 +115,15 @@ public class Ui {
                 System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
             }
         }
+    }
+
+    /**
+     * Shows the "find" results: header then numbered list of matching tasks (varargs).
+     *
+     * @param tasks zero or more tasks that matched the search keyword
+     */
+    public void showMatchingTasks(Task... tasks) {
+        showMatchingTasks(new ArrayList<>(Arrays.asList(tasks)));
     }
 
     /**
