@@ -1,10 +1,10 @@
 package tanka;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class ParserTest {
 
@@ -120,15 +120,13 @@ public class ParserTest {
 
     @Test
     public void parseTask_deadlineWithoutBy_throwsTankaException() {
-        TankaException e = assertThrows(TankaException.class,
-            () -> Parser.parseTask("deadline submit no slash by"));
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask("deadline submit no slash by"));
         assertEquals("A deadline task must have aa d /by <time>!", e.getMessage());
     }
 
     @Test
     public void parseTask_deadlineInvalidDate_throwsTankaException() {
-        TankaException e = assertThrows(TankaException.class,
-            () -> Parser.parseTask("deadline submit /by not-a-date"));
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask("deadline submit /by not-a-date"));
         assertEquals("Invalid date. Use yyyy-mm-dd", e.getMessage());
     }
 
@@ -141,14 +139,12 @@ public class ParserTest {
 
     @Test
     public void parseTask_eventWithoutFrom_throwsTankaException() {
-        assertThrows(TankaException.class,
-            () -> Parser.parseTask("event meeting /to 3pm"));
+        assertThrows(TankaException.class, () -> Parser.parseTask("event meeting /to 3pm"));
     }
 
     @Test
     public void parseTask_eventWithoutTo_throwsTankaException() {
-        assertThrows(TankaException.class,
-            () -> Parser.parseTask("event meeting /from 2pm"));
+        assertThrows(TankaException.class, () -> Parser.parseTask("event meeting /from 2pm"));
     }
 
     @Test
@@ -190,29 +186,25 @@ public class ParserTest {
 
     @Test
     public void parseFromFile_tooFewParts_throwsTankaException() {
-        TankaException e = assertThrows(TankaException.class,
-            () -> Parser.parseFromFile("T | 0"));
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseFromFile("T | 0"));
         assertEquals("Invalid format in data file.", e.getMessage());
     }
 
     @Test
     public void parseFromFile_undefinedType_throwsTankaException() {
-        TankaException e = assertThrows(TankaException.class,
-            () -> Parser.parseFromFile("X | 0 | desc"));
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseFromFile("X | 0 | desc"));
         assertEquals("Undefined Task type declared in file.", e.getMessage());
     }
 
     @Test
     public void parseFromFile_deadlineTooFewParts_throwsTankaException() {
-        TankaException e = assertThrows(TankaException.class,
-            () -> Parser.parseFromFile("D | 0 | desc"));
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseFromFile("D | 0 | desc"));
         assertEquals("Invalid Deadline format in data file.", e.getMessage());
     }
 
     @Test
     public void parseFromFile_eventTooFewParts_throwsTankaException() {
-        TankaException e = assertThrows(TankaException.class,
-            () -> Parser.parseFromFile("E | 0 | desc | start"));
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseFromFile("E | 0 | desc | start"));
         assertEquals("Invalid Event format in data file.", e.getMessage());
     }
 }

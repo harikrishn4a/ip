@@ -28,7 +28,7 @@ public class Storage {
         if (!file.exists()) {
             return tasks;
         }
-        
+
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
@@ -59,7 +59,7 @@ public class Storage {
             for (Task task : tasks) {
                 writer.write(task.toFileString() + System.lineSeparator());
             }
-            writer.close();  
+            writer.close();
         } catch (IOException e) {
             throw new TankaException("Failed to save tasks" + e.getMessage());
         }

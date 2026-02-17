@@ -10,7 +10,7 @@ public abstract class Task {
     }
 
     public String getStatusIcon() {
-        return (this.isDone? "X" : " ");
+        return (this.isDone ? "X" : " ");
     }
 
     public String getStatusDecription() {
