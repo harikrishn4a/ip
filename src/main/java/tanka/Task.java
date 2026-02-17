@@ -17,6 +17,11 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    /** Returns true if this task is marked done. */
+    public boolean isDone() {
+        return isDone;
+    }
+
     /** Returns "X" if done, " " if not done. */
     public String getStatusIcon() {
         return (this.isDone ? "X" : " ");

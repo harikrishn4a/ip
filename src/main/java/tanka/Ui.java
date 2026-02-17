@@ -142,6 +142,21 @@ public class Ui {
         }
     }
 
+    /**
+     * Shows upcoming deadline reminders: header then numbered list, or a no-upcoming message.
+     *
+     * @param tasks list of incomplete deadlines due within the reminder window
+     */
+    public void showReminders(ArrayList<Task> tasks) {
+        System.out.println(" Here are your upcoming deadlines:");
+        if (tasks.isEmpty()) {
+            System.out.println("  No upcoming deadlines.");
+        } else {
+            IntStream.range(0, tasks.size())
+                    .forEach(i -> System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString()));
+        }
+    }
+
     /** Prints the goodbye message. */
     public void showBye() {
         System.out.println(" Bye. Hope to see you again soon!");

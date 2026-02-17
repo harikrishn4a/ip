@@ -10,6 +10,7 @@ public class Parser {
 
     private static final String COMMAND_BYE = "bye";
     private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_REMIND = "remind";
     private static final String PREFIX_MARK = "mark ";
     private static final String PREFIX_UNMARK = "unmark ";
     private static final String PREFIX_DELETE = "delete ";
@@ -49,11 +50,32 @@ public class Parser {
         } else if (trimmed.startsWith(PREFIX_FIND)) {
             String keyword = trimmed.substring(PREFIX_FIND.length()).trim();
             return new FindCommand(keyword);
+        } else if (trimmed.equals(COMMAND_REMIND)) {
+            return new RemindCommand(7);
+        } else if (trimmed.startsWith(COMMAND_REMIND + " ")) {
+            String rest = trimmed.substring(COMMAND_REMIND.length()).trim();
+            int days = parseRemindDays(rest);
+            return new RemindCommand(days);
         } else if (trimmed.startsWith(PREFIX_TODO) || trimmed.startsWith(PREFIX_DEADLINE)
                 || trimmed.startsWith(PREFIX_EVENT)) {
             return new AddCommand(trimmed);
         } else {
             throw new TankaException("Sorry I don't understand what you mean!");
+        }
+    }
+
+    private static int parseRemindDays(String str) throws TankaException {
+        if (str.isEmpty()) {
+            throw new TankaException("Please provide a positive number of days for remind.");
+        }
+        try {
+            int days = Integer.parseInt(str.trim());
+            if (days < 1) {
+                throw new TankaException("Please provide a positive number of days for remind.");
+            }
+            return days;
+        } catch (NumberFormatException e) {
+            throw new TankaException("Please provide a positive number of days for remind.");
         }
     }
 

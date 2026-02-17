@@ -54,6 +54,37 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_remind_returnsRemindCommandWithDefaultDays() throws TankaException {
+        Command c = Parser.parse("remind");
+        assertInstanceOf(RemindCommand.class, c);
+        assertEquals(7, ((RemindCommand) c).getDays());
+    }
+
+    @Test
+    public void parse_remindWithNumber_returnsRemindCommandWithThatManyDays() throws TankaException {
+        Command c = Parser.parse("remind 3");
+        assertInstanceOf(RemindCommand.class, c);
+        assertEquals(3, ((RemindCommand) c).getDays());
+    }
+
+    @Test
+    public void parse_remindWithNegative_throwsTankaException() {
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parse("remind -1"));
+        assertEquals("Please provide a positive number of days for remind.", e.getMessage());
+    }
+
+    @Test
+    public void parse_remindWithZero_throwsTankaException() {
+        assertThrows(TankaException.class, () -> Parser.parse("remind 0"));
+    }
+
+    @Test
+    public void parse_remindWithNonNumeric_throwsTankaException() {
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parse("remind abc"));
+        assertEquals("Please provide a positive number of days for remind.", e.getMessage());
+    }
+
+    @Test
     public void parse_trimmedInput_acceptsWhitespace() throws TankaException {
         Command c = Parser.parse("  list  ");
         assertInstanceOf(ListCommand.class, c);
