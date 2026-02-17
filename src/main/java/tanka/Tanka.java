@@ -1,8 +1,5 @@
 package tanka;
 
-import java.util.ArrayList;
-import java.io.File;
-
 public class Tanka {
     private Storage storage;
     private TaskList tasks;

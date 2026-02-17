@@ -1,8 +1,8 @@
 package tanka;
 
-public class UnmarkCommand extends Command{
+public class UnmarkCommand extends Command {
     private final int index;
-    
+
     public UnmarkCommand(int index) {
         this.index = index;
     }
@@ -17,5 +17,4 @@ public class UnmarkCommand extends Command{
         }
         ui.showMarkedUndone(tasks.get(index));
     }
-    
 }

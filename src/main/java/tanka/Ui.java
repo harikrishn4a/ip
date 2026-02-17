@@ -5,30 +5,30 @@ import java.util.Scanner;
 
 public class Ui {
     private Scanner scanner;
-    
+
     public Ui() {
         scanner = new Scanner(System.in);
     }
 
     public void showWelcome() {
         // Welcome message
-        String logo = 
-                "████████╗ █████╗ ███╗   ██╗██╗  ██╗ █████╗\n" +
-                "╚══██╔══╝██╔══██╗████╗  ██║██║ ██╔╝██╔══██╗\n" +
-                "   ██║   ███████║██╔██╗ ██║█████╔╝ ███████║\n" +
-                "   ██║   ██╔══██║██║╚██╗██║██╔═██╗ ██╔══██║\n" +
-                "   ██║   ██║  ██║██║ ╚████║██║  ██╗██║  ██║\n" +
-                "   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝\n" +
-                "\n" +
-                "     J A H A R I\n" +
-                "\n" +
-                "but i would never order a WHOLE pizza 🍕 for myself";
-               
-            System.out.println("Hello! I'm \n" + logo);
-            System.out.println("____________________________________________________________");
-            System.out.println(" Hello! I'm Tanka Jahari");
-            System.out.println(" What can I do for you?");
-            System.out.println("____________________________________________________________");
+        String logo =
+                "████████╗ █████╗ ███╗   ██╗██╗  ██╗ █████╗\n"
+                + "╚══██╔══╝██╔══██╗████╗  ██║██║ ██╔╝██╔══██╗\n"
+                + "   ██║   ███████║██╔██╗ ██║█████╔╝ ███████║\n"
+                + "   ██║   ██╔══██║██║╚██╗██║██╔═██╗ ██╔══██║\n"
+                + "   ██║   ██║  ██║██║ ╚████║██║  ██╗██║  ██║\n"
+                + "   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝\n"
+                + "\n"
+                + "     J A H A R I\n"
+                + "\n"
+                + "but i would never order a WHOLE pizza 🍕 for myself";
+
+        System.out.println("Hello! I'm \n" + logo);
+        System.out.println("____________________________________________________________");
+        System.out.println(" Hello! I'm Tanka Jahari");
+        System.out.println(" What can I do for you?");
+        System.out.println("____________________________________________________________");
     }
 
     public String readCommand() {
