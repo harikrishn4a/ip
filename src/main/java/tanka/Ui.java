@@ -8,6 +8,20 @@ import java.util.Scanner;
  * Handles all user interaction: reading commands and printing messages.
  */
 public class Ui {
+
+    /** Logo and tagline shown in the welcome message. */
+    protected static final String WELCOME_LOGO =
+            "████████╗ █████╗ ███╗   ██╗██╗  ██╗ █████╗\n"
+            + "╚══██╔══╝██╔══██╗████╗  ██║██║ ██╔╝██╔══██╗\n"
+            + "   ██║   ███████║██╔██╗ ██║█████╔╝ ███████║\n"
+            + "   ██║   ██╔══██║██║╚██╗██║██╔═██╗ ██╔══██║\n"
+            + "   ██║   ██║  ██║██║ ╚████║██║  ██╗██║  ██║\n"
+            + "   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝\n"
+            + "\n"
+            + "     J A H A R I\n"
+            + "\n"
+            + "but i would never order a WHOLE pizza 🍕 for myself";
+
     private Scanner scanner;
 
     /** Creates a Ui that reads from standard input. */
@@ -16,20 +30,7 @@ public class Ui {
     }
 
     public void showWelcome() {
-        // Welcome message
-        String logo =
-                "████████╗ █████╗ ███╗   ██╗██╗  ██╗ █████╗\n"
-                + "╚══██╔══╝██╔══██╗████╗  ██║██║ ██╔╝██╔══██╗\n"
-                + "   ██║   ███████║██╔██╗ ██║█████╔╝ ███████║\n"
-                + "   ██║   ██╔══██║██║╚██╗██║██╔═██╗ ██╔══██║\n"
-                + "   ██║   ██║  ██║██║ ╚████║██║  ██╗██║  ██║\n"
-                + "   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝\n"
-                + "\n"
-                + "     J A H A R I\n"
-                + "\n"
-                + "but i would never order a WHOLE pizza 🍕 for myself";
-
-        System.out.println("Hello! I'm \n" + logo);
+        System.out.println("Hello! I'm \n" + WELCOME_LOGO);
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Tanka Jahari");
         System.out.println(" What can I do for you?");
@@ -108,13 +109,7 @@ public class Ui {
      * @param tasks the TaskList to display
      */
     public void showTaskList(TaskList tasks) {
-        if (tasks.isEmpty()) {
-            System.out.println("  You have no tasks in your list.");
-        } else {
-            for (int i = 0; i < tasks.size(); i++) {
-                System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
-            }
-        }
+        showTaskList(tasks.getList());
     }
 
     /**

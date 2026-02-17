@@ -11,18 +11,7 @@ public class GuiUi extends Ui {
 
     @Override
     public void showWelcome() {
-        String logo =
-                "████████╗ █████╗ ███╗   ██╗██╗  ██╗ █████╗\n"
-                + "╚══██╔══╝██╔══██╗████╗  ██║██║ ██╔╝██╔══██╗\n"
-                + "   ██║   ███████║██╔██╗ ██║█████╔╝ ███████║\n"
-                + "   ██║   ██╔══██║██║╚██╗██║██╔═██╗ ██╔══██║\n"
-                + "   ██║   ██║  ██║██║ ╚████║██║  ██╗██║  ██║\n"
-                + "   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝\n"
-                + "\n"
-                + "     J A H A R I\n"
-                + "\n"
-                + "but i would never order a WHOLE pizza 🍕 for myself";
-        output.append("Hello! I'm \n").append(logo).append("\n");
+        output.append("Hello! I'm \n").append(Ui.WELCOME_LOGO).append("\n");
         output.append("____________________________________________________________\n");
         output.append(" Hello! I'm Tanka Jahari\n");
         output.append(" What can I do for you?\n");
@@ -62,13 +51,7 @@ public class GuiUi extends Ui {
 
     @Override
     public void showTaskList(TaskList tasks) {
-        if (tasks.isEmpty()) {
-            output.append("  You have no tasks in your list.\n");
-        } else {
-            for (int i = 0; i < tasks.size(); i++) {
-                output.append(" ").append(i + 1).append(". ").append(tasks.get(i).toString()).append("\n");
-            }
-        }
+        showTaskList(tasks.getList());
     }
 
     @Override

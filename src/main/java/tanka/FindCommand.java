@@ -23,7 +23,7 @@ public class FindCommand extends Command {
         ArrayList<Task> matching = new ArrayList<>();
         String lowerKeyword = keyword.toLowerCase();
         for (Task task : all) {
-            if (task.getStatusDecription().toLowerCase().contains(lowerKeyword)) {
+            if (task.getStatusDescription().toLowerCase().contains(lowerKeyword)) {
                 matching.add(task);
             }
         }
