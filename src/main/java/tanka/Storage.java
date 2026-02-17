@@ -32,14 +32,8 @@ public class Storage {
     public ArrayList<Task> loadTasks() throws TankaException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
+        ensureParentDirExists(file);
 
-        // Ensure access to parent directory, or create.
-        File parentDir = file.getParentFile();
-        if (parentDir != null && !parentDir.exists()) {
-            parentDir.mkdirs();
-        }
-
-        // First Run Validity: If file does not exist, return empty list
         if (!file.exists()) {
             return tasks;
         }
@@ -72,18 +66,21 @@ public class Storage {
         // Get File and parent dir, use FileWriter to write it
         try {
             File file = new File(filePath);
-            File parentDir = file.getParentFile();
-            if (parentDir != null && !parentDir.exists()) {
-                parentDir.mkdirs();
-            }
-
+            ensureParentDirExists(file);
             FileWriter writer = new FileWriter(file);
             for (Task task : tasks) {
                 writer.write(task.toFileString() + System.lineSeparator());
             }
             writer.close();
         } catch (IOException e) {
-            throw new TankaException("Failed to save tasks" + e.getMessage());
+            throw new TankaException("Failed to save tasks: " + e.getMessage());
+        }
+    }
+
+    private void ensureParentDirExists(File file) {
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
         }
     }
 }

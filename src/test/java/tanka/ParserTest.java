@@ -69,7 +69,7 @@ public class ParserTest {
     public void parse_markWithNoNumber_throwsTankaException() {
         // "mark x" triggers mark branch but index is non-numeric
         TankaException e = assertThrows(TankaException.class, () -> Parser.parse("mark x"));
-        assertEquals("Please provide a valid task number.", e.getMessage());
+        assertEquals("Please provide a valid task number for mark.", e.getMessage());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ParserTest {
     public void parseTask_validTodo_returnsTodo() throws TankaException {
         Task t = Parser.parseTask("todo read book");
         assertInstanceOf(Todo.class, t);
-        assertEquals("read book", t.getStatusDecription());
+        assertEquals("read book", t.getStatusDescription());
     }
 
     @Test
@@ -121,13 +121,13 @@ public class ParserTest {
     public void parseTask_validDeadline_returnsDeadline() throws TankaException {
         Task t = Parser.parseTask("deadline submit /by 2025-02-10");
         assertInstanceOf(Deadline.class, t);
-        assertEquals("submit", t.getStatusDecription());
+        assertEquals("submit", t.getStatusDescription());
     }
 
     @Test
     public void parseTask_deadlineWithoutBy_throwsTankaException() {
         TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask("deadline submit no slash by"));
-        assertEquals("A deadline task must have aa d /by <time>!", e.getMessage());
+        assertEquals("A deadline task must have a /by <time>!", e.getMessage());
     }
 
     @Test
@@ -140,7 +140,7 @@ public class ParserTest {
     public void parseTask_validEvent_returnsEvent() throws TankaException {
         Task t = Parser.parseTask("event meeting /from 2pm /to 3pm");
         assertInstanceOf(Event.class, t);
-        assertEquals("meeting", t.getStatusDecription());
+        assertEquals("meeting", t.getStatusDescription());
     }
 
     @Test
@@ -165,7 +165,7 @@ public class ParserTest {
     public void parseFromFile_todoNotDone_returnsTodo() throws TankaException {
         Task t = Parser.parseFromFile("T | 0 | buy milk");
         assertInstanceOf(Todo.class, t);
-        assertEquals("buy milk", t.getStatusDecription());
+        assertEquals("buy milk", t.getStatusDescription());
         assertEquals(" ", t.getStatusIcon());
     }
 
@@ -180,14 +180,14 @@ public class ParserTest {
     public void parseFromFile_deadline_returnsDeadline() throws TankaException {
         Task t = Parser.parseFromFile("D | 0 | submit | 2025-03-01");
         assertInstanceOf(Deadline.class, t);
-        assertEquals("submit", t.getStatusDecription());
+        assertEquals("submit", t.getStatusDescription());
     }
 
     @Test
     public void parseFromFile_event_returnsEvent() throws TankaException {
         Task t = Parser.parseFromFile("E | 0 | meeting | 2pm | 3pm");
         assertInstanceOf(Event.class, t);
-        assertEquals("meeting", t.getStatusDecription());
+        assertEquals("meeting", t.getStatusDescription());
     }
 
     @Test
