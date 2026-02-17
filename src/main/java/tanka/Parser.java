@@ -50,7 +50,9 @@ public class Parser {
             if (oneBased < 1) {
                 throw new TankaException("Please provide a valid task number.");
             }
-            return oneBased - 1;
+            int index = oneBased - 1;
+            assert index >= 0 : "0-based index must be non-negative";
+            return index;
         } catch (NumberFormatException e) {
             throw new TankaException("Please provide a valid task number.");
         }
@@ -196,6 +198,7 @@ public class Parser {
         if (isDone == 1) {
             task.markAsDone();
         }
+        assert task != null : "parsed task must not be null";
         return task;
     }
 }

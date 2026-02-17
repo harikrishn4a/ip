@@ -20,6 +20,9 @@ public class FindCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        assert keyword != null : "keyword must not be null";
+        ArrayList<Task> all = tasks.getList();
+        ArrayList<Task> matching = new ArrayList<>();
         String lowerKeyword = keyword.toLowerCase();
         ArrayList<Task> matching = tasks.getList().stream()
                 .filter(task -> task.getStatusDecription().toLowerCase().contains(lowerKeyword))
