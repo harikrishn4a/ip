@@ -1,8 +1,16 @@
 package tanka;
 
+/**
+ * Command to mark a task as done at a given 0-based index.
+ */
 public class MarkCommand extends Command {
     private final int index;
 
+    /**
+     * Creates a MarkCommand for the task at the given index.
+     *
+     * @param index 0-based index of the task to mark done
+     */
     public MarkCommand(int index) {
         this.index = index;
     }

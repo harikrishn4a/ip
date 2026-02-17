@@ -1,5 +1,8 @@
 package tanka;
 
+/**
+ * Command to display all tasks in the list.
+ */
 public class ListCommand extends Command {
 
     @Override

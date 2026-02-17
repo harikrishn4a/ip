@@ -5,8 +5,18 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input and file lines into {@link Command} or {@link Task} objects.
+ */
 public class Parser {
 
+    /**
+     * Parses a full command string into the corresponding Command.
+     *
+     * @param fullCommand raw user input (e.g. "list", "mark 1", "todo read book")
+     * @return the parsed Command
+     * @throws TankaException if the command is unknown or invalid
+     */
     public static Command parse(String fullCommand) throws TankaException {
         String trimmed = fullCommand.trim();
 
@@ -44,6 +54,14 @@ public class Parser {
             throw new TankaException("Please provide a valid task number.");
         }
     }
+
+    /**
+     * Parses a task-creation input (todo/deadline/event) into a Task.
+     *
+     * @param userInput raw input (e.g. "todo read", "deadline x /by 2025-01-01", "event y /from a /to b")
+     * @return the parsed Task
+     * @throws TankaException if the input is invalid or missing required parts
+     */
     public static Task parseTask(String userInput) throws TankaException {
         if (userInput.startsWith("todo")) {
             return parseTodo(userInput);

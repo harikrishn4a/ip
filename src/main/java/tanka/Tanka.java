@@ -3,11 +3,21 @@ package tanka;
 import java.util.ArrayList;
 import java.io.File;
 
+/**
+ * Main application class for Tanka, a task list manager.
+ * Coordinates storage, task list, and UI to run the command loop.
+ */
 public class Tanka {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Creates a Tanka instance and loads tasks from the given file path.
+     * If loading fails, starts with an empty task list and shows a loading error.
+     *
+     * @param filePath path to the data file (e.g. "data/tasks.txt")
+     */
     public Tanka(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -21,6 +31,9 @@ public class Tanka {
         }
     }
 
+    /**
+     * Runs the main command loop: shows welcome, reads commands, parses and executes them until bye.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -41,6 +54,11 @@ public class Tanka {
         ui.close();
     }
 
+    /**
+     * Entry point. Starts Tanka with the default data file and runs the app.
+     *
+     * @param args unused
+     */
     public static void main(String[] args) {
         new Tanka("data/tasks.txt").run();
     }
