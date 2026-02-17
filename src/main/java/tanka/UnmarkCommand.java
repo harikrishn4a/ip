@@ -1,3 +1,5 @@
+package tanka;
+
 public class UnmarkCommand extends Command{
     private final int index;
     

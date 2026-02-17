@@ -1,3 +1,5 @@
+package tanka;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

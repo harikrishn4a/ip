@@ -1,3 +1,5 @@
+package tanka;
+
 public class AddCommand extends Command {
     private final String userInput;
 
