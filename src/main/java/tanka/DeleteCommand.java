@@ -1,8 +1,16 @@
 package tanka;
 
+/**
+ * Command to delete a task at a given 0-based index.
+ */
 public class DeleteCommand extends Command {
     private final int index;
 
+    /**
+     * Creates a DeleteCommand for the task at the given index.
+     *
+     * @param index 0-based index of the task to delete
+     */
     public DeleteCommand(int index) {
         this.index = index;
     }

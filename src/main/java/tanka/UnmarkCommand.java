@@ -1,8 +1,16 @@
 package tanka;
 
+/**
+ * Command to mark a task as not done at a given 0-based index.
+ */
 public class UnmarkCommand extends Command {
     private final int index;
 
+    /**
+     * Creates an UnmarkCommand for the task at the given index.
+     *
+     * @param index 0-based index of the task to unmark
+     */
     public UnmarkCommand(int index) {
         this.index = index;
     }

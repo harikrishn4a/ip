@@ -7,13 +7,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Loads and saves tasks to a text file using {@link Parser#parseFromFile} and {@link Task#toFileString}.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Creates a Storage that uses the given file path.
+     *
+     * @param filePath path to the data file
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the file. Creates parent directories if needed. Returns an empty list if file does not exist.
+     *
+     * @return list of tasks (may be empty)
+     * @throws TankaException if a line in the file is invalid
+     */
     public ArrayList<Task> loadTasks() throws TankaException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -46,6 +60,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Overwrites the file with the given tasks. Creates parent directories if needed.
+     *
+     * @param tasks the tasks to save
+     * @throws TankaException if writing fails
+     */
     public void saveTasks(ArrayList<Task> tasks) throws TankaException {
         // Get File and parent dir, use FileWriter to write it
         try {
