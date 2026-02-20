@@ -93,7 +93,7 @@ public class ParserTest {
     @Test
     public void parse_unknownCommand_throwsTankaException() {
         TankaException e = assertThrows(TankaException.class, () -> Parser.parse("unknown"));
-        assertEquals("Sorry I don't understand what you mean!", e.getMessage());
+        assertEquals(Ui.MESSAGE_PARSE_ERROR, e.getMessage());
     }
 
     @Test
@@ -187,7 +187,7 @@ public class ParserTest {
     @Test
     public void parseTask_unknownType_throwsTankaException() {
         TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask("other x"));
-        assertEquals("Sorry! I don't understand what you mean!", e.getMessage());
+        assertEquals(Ui.MESSAGE_PARSE_ERROR, e.getMessage());
     }
 
     // ---- parseFromFile(String) ----

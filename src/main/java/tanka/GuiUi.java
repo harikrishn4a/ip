@@ -14,8 +14,7 @@ public class GuiUi extends Ui {
     public void showWelcome() {
         output.append("Hello! I'm \n").append(Ui.WELCOME_LOGO).append("\n");
         output.append("____________________________________________________________\n");
-        output.append(" Hello! I'm Tanka Jahari\n");
-        output.append(" What can I do for you?\n");
+        output.append(" ").append(Ui.WELCOME_MESSAGE).append("\n");
         output.append("____________________________________________________________\n");
     }
 
@@ -31,7 +30,7 @@ public class GuiUi extends Ui {
 
     @Override
     public void showLoadingError(String message) {
-        output.append("  ").append(message).append(" Starting with empty list.\n");
+        output.append("  ").append(message).append(Ui.MESSAGE_LOADING_ERROR_SUFFIX).append("\n");
     }
 
     @Override
@@ -42,7 +41,7 @@ public class GuiUi extends Ui {
     @Override
     public void showTaskList(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
-            output.append("  You have no tasks in your list.\n");
+            output.append(Ui.MESSAGE_LIST_EMPTY).append("\n");
         } else {
             IntStream.range(0, tasks.size())
                     .forEach(i -> output.append(" ").append(i + 1).append(". ")
@@ -57,9 +56,9 @@ public class GuiUi extends Ui {
 
     @Override
     public void showMatchingTasks(ArrayList<Task> tasks) {
-        output.append(" Here are the matching tasks in your list:\n");
+        output.append(Ui.MESSAGE_FIND_HEADER).append("\n");
         if (tasks.isEmpty()) {
-            output.append("  No matching tasks.\n");
+            output.append(Ui.MESSAGE_FIND_EMPTY).append("\n");
         } else {
             IntStream.range(0, tasks.size())
                     .forEach(i -> output.append(" ").append(i + 1).append(". ")
@@ -69,9 +68,9 @@ public class GuiUi extends Ui {
 
     @Override
     public void showReminders(ArrayList<Task> tasks) {
-        output.append(" Here are your upcoming deadlines:\n");
+        output.append(Ui.MESSAGE_REMINDERS_HEADER).append("\n");
         if (tasks.isEmpty()) {
-            output.append("  No upcoming deadlines.\n");
+            output.append(Ui.MESSAGE_REMINDERS_EMPTY).append("\n");
         } else {
             IntStream.range(0, tasks.size())
                     .forEach(i -> output.append(" ").append(i + 1).append(". ")
@@ -81,33 +80,33 @@ public class GuiUi extends Ui {
 
     @Override
     public void showBye() {
-        output.append(" Bye. Hope to see you again soon!\n");
+        output.append(" ").append(Ui.MESSAGE_BYE).append("\n");
     }
 
     @Override
     public void showMarkedDone(Task task) {
-        output.append(" Nice! I've marked this task as done:\n");
+        output.append(" ").append(Ui.MESSAGE_MARKED_DONE).append("\n");
         output.append("  ").append(task.toString()).append("\n");
     }
 
     @Override
     public void showMarkedUndone(Task task) {
-        output.append(" OK, I've marked this task as not done yet:\n");
+        output.append(Ui.MESSAGE_MARKED_UNDONE).append("\n");
         output.append("  ").append(task.toString()).append("\n");
     }
 
     @Override
     public void showDeleted(Task deletedTask, int remainingCount) {
-        output.append("  Noted. I've removed this task:\n");
+        output.append(Ui.MESSAGE_DELETED_HEADER).append("\n");
         output.append("   ").append(deletedTask).append("\n");
-        output.append("  Now you have ").append(remainingCount).append(" tasks in the list.\n");
+        output.append(String.format(Ui.MESSAGE_REMAINING_COUNT, remainingCount)).append("\n");
     }
 
     @Override
     public void showAdded(Task newTask, int totalCount) {
-        output.append("  Got it. I've added this task:\n");
+        output.append(" ").append(Ui.MESSAGE_ADDED_HEADER).append("\n");
         output.append("  ").append(newTask).append("\n");
-        output.append("  Now you have ").append(totalCount).append(" tasks in the list.\n");
+        output.append(String.format(Ui.MESSAGE_REMAINING_COUNT, totalCount)).append("\n");
     }
 
     /**
