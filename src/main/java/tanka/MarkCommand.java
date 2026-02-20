@@ -17,7 +17,9 @@ public class MarkCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws TankaException {
-        assert index >= 0 && index < tasks.size() : "index must be valid for task list";
+        if (index < 0 || index >= tasks.size()) {
+            throw new TankaException("This task number does not exist!");
+        }
         tasks.get(index).markAsDone();
         try {
             storage.saveTasks(tasks.getList());

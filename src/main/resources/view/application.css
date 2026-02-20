@@ -17,14 +17,22 @@
     -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
 }
 
-/* Tanka/duke messages: left-aligned, soft teal tint, monospace for lists */
+/* Tanka/duke messages: left-aligned, soft teal tint, readable sans-serif */
 .dialog-box.duke {
     -fx-alignment: center-left;
 }
 .dialog-box.duke .label {
     -fx-background-color: #e0f2f1;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 13px;
+    -fx-max-width: 520px;
+}
+
+/* Welcome dialog: keep monospace for ASCII logo; wider so message lines don't wrap */
+.dialog-box.duke.welcome .label {
     -fx-font-family: monospace;
-    -fx-max-width: 360px;
+    -fx-font-size: 12px;
+    -fx-max-width: 720px;
 }
 
 /* Error messages: distinct warning style so user sees something went wrong */
@@ -40,7 +48,7 @@
 }
 .dialog-box.user .label {
     -fx-background-color: #e3f2fd;
-    -fx-max-width: 360px;
+    -fx-max-width: 520px;
 }
 
 /* ScrollPane: creamy background for relaxed feel */

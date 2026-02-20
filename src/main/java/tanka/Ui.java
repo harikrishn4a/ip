@@ -11,6 +11,11 @@ import java.util.stream.IntStream;
  */
 public class Ui {
 
+    /** Shown when user input is not understood (used by Parser). */
+    public static final String MESSAGE_PARSE_ERROR =
+            "Hmm, that command didn't quite make sense. Like pineapple on pizza—some things don't fit. "
+            + "Could you rephrase?";
+
     /** Logo and tagline shown in the welcome message. */
     protected static final String WELCOME_LOGO =
             "████████╗ █████╗ ███╗   ██╗██╗  ██╗ █████╗\n"
@@ -22,11 +27,12 @@ public class Ui {
             + "\n"
             + "     J A H A R I\n"
             + "\n"
-            + "but i would never order a WHOLE pizza 🍕 for myself";
+            + "but i would never order a WHOLE pizza \uD83C\uDF55 for myself";
 
     // ---- Personality phrases (Chill and Reliable Task Buddy) ----
     protected static final String WELCOME_MESSAGE =
-            "Hey there! I'm Tanka. Let's get these tasks squared away. You focus on what matters—maybe I'll grab a slice later.";
+            "Hey there! I'm Tanka. Let's get these tasks squared away. "
+            + "You focus on what matters—maybe I'll grab a slice later.";
     protected static final String MESSAGE_BYE = "Catch you later. Hope to see you again soon!";
     protected static final String MESSAGE_LOADING_ERROR_SUFFIX = " Starting with empty list.";
     protected static final String MESSAGE_LIST_EMPTY = "  You have no tasks in your list.";
@@ -37,11 +43,9 @@ public class Ui {
     protected static final String MESSAGE_MARKED_DONE = "Boom! Task finished. You nailed it!";
     protected static final String MESSAGE_MARKED_UNDONE = " OK, I've marked this task as not done yet:";
     protected static final String MESSAGE_DELETED_HEADER = "  Noted. I've removed this task:";
-    protected static final String MESSAGE_ADDED_HEADER = "Gotcha. Another one for the list. No biggie, we'll get through it.";
+    protected static final String MESSAGE_ADDED_HEADER =
+            "Gotcha. Another one for the list. No biggie, we'll get through it.";
     protected static final String MESSAGE_REMAINING_COUNT = "  Now you have %d tasks in the list.";
-    /** Shown when user input is not understood (used by Parser). */
-    public static final String MESSAGE_PARSE_ERROR =
-            "Hmm, that command didn't quite make sense. Like pineapple on pizza—some things don't fit. Could you rephrase?";
 
     private Scanner scanner;
 

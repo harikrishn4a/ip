@@ -15,10 +15,20 @@ public class AddCommand extends Command {
         this.userInput = userInput;
     }
 
+    private static String normalizedForDuplicate(Task task) {
+        return task.toFileString().replaceFirst(" \\| [01] \\| ", " | 0 | ");
+    }
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws TankaException {
         Task newTask = Parser.parseTask(userInput);
         assert newTask != null : "parseTask must return a non-null task";
+        String newNorm = normalizedForDuplicate(newTask);
+        for (Task existing : tasks.getList()) {
+            if (normalizedForDuplicate(existing).equals(newNorm)) {
+                throw new TankaException("This task already exists in the list.");
+            }
+        }
         tasks.add(newTask);
         ui.showAdded(newTask, tasks.size());
 

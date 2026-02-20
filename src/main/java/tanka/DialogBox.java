@@ -82,14 +82,16 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Tanka welcome dialog with logo: same as getDukeDialog but uses monospace
-     * font so the ASCII logo displays correctly.
+     * Tanka welcome dialog with logo: uses monospace so the ASCII logo displays correctly,
+     * and "welcome" style for wider bubble so message lines fit on one line.
      */
     public static DialogBox getDukeWelcomeDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
         db.getStyleClass().add("duke");
+        db.getStyleClass().add("welcome");
         db.dialog.setStyle("-fx-font-family: monospace; -fx-font-size: 12px;");
-        db.setMinWidth(380);
+        db.setMinWidth(400);
+        db.setPrefWidth(720);
         db.flip();
         return db;
     }

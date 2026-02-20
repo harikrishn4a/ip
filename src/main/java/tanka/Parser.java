@@ -23,6 +23,7 @@ public class Parser {
     private static final String TYPE_DEADLINE = "D";
     private static final String TYPE_EVENT = "E";
     private static final int DONE_VALUE = 1;
+    private static final String DESC_NO_PIPE = "Task description cannot contain \" | \".";
 
     /**
      * Parses a full command string into the corresponding Command.
@@ -39,13 +40,13 @@ public class Parser {
         } else if (trimmed.equals(COMMAND_LIST)) {
             return new ListCommand();
         } else if (trimmed.startsWith(PREFIX_MARK)) {
-            int index = parseIndex(trimmed.substring(PREFIX_MARK.length()), "mark");
+            int index = parseIndex(trimmed.substring(PREFIX_MARK.length()).trim(), "mark");
             return new MarkCommand(index);
         } else if (trimmed.startsWith(PREFIX_UNMARK)) {
-            int index = parseIndex(trimmed.substring(PREFIX_UNMARK.length()), "unmark");
+            int index = parseIndex(trimmed.substring(PREFIX_UNMARK.length()).trim(), "unmark");
             return new UnmarkCommand(index);
         } else if (trimmed.startsWith(PREFIX_DELETE)) {
-            int index = parseIndex(trimmed.substring(PREFIX_DELETE.length()), "delete");
+            int index = parseIndex(trimmed.substring(PREFIX_DELETE.length()).trim(), "delete");
             return new DeleteCommand(index);
         } else if (trimmed.startsWith(PREFIX_FIND)) {
             String keyword = trimmed.substring(PREFIX_FIND.length()).trim();
@@ -80,11 +81,15 @@ public class Parser {
     }
 
     private static int parseIndex(String str, String commandName) throws TankaException {
-        if (str.isEmpty()) {
+        String trimmed = str.trim();
+        if (trimmed.isEmpty()) {
             throw new TankaException("Please provide a valid task number for " + commandName + ".");
         }
+        if (trimmed.split("\\s+").length > 1) {
+            throw new TankaException("Please provide a single task number for " + commandName + ".");
+        }
         try {
-            int oneBased = Integer.parseInt(str);
+            int oneBased = Integer.parseInt(trimmed);
             if (oneBased < 1) {
                 throw new TankaException("Please provide a valid task number for " + commandName + ".");
             }
@@ -123,6 +128,9 @@ public class Parser {
         if (desc.isEmpty()) {
             throw new TankaException("The description of a todo task cannot be empty!");
         }
+        if (desc.contains(" | ")) {
+            throw new TankaException(DESC_NO_PIPE);
+        }
         return new Todo(desc);
     }
 
@@ -140,8 +148,14 @@ public class Parser {
         String desc = parts[0].trim();
         String dueBy = parts[1].trim();
 
+        if (dueBy.contains("/by")) {
+            throw new TankaException("Do not specify /by more than once.");
+        }
         if (desc.isEmpty()) {
             throw new TankaException("The description of a deadline task cannot be empty!");
+        }
+        if (desc.contains(" | ")) {
+            throw new TankaException(DESC_NO_PIPE);
         }
 
         try {
@@ -178,6 +192,9 @@ public class Parser {
         String start = subParts[0].trim();
         String end = subParts[1].trim();
 
+        if (start.contains("/to") || end.contains("/from")) {
+            throw new TankaException("Do not specify /from or /to more than once.");
+        }
         if (desc.isEmpty()) {
             throw new TankaException("The description of an event task cannot be empty!");
         }
@@ -186,6 +203,19 @@ public class Parser {
         }
         if (end.isEmpty()) {
             throw new TankaException("The end period of an event task cannot be empty!");
+        }
+        if (desc.contains(" | ")) {
+            throw new TankaException(DESC_NO_PIPE);
+        }
+
+        try {
+            LocalDate startDate = LocalDate.parse(start);
+            LocalDate endDate = LocalDate.parse(end);
+            if (!startDate.isBefore(endDate)) {
+                throw new TankaException("Event start must be before end.");
+            }
+        } catch (DateTimeParseException e) {
+            // Not both dates; allow as-is (e.g. "2pm" / "4pm")
         }
 
         return new Event(desc, start, end);
@@ -204,7 +234,12 @@ public class Parser {
             throw new TankaException("Invalid format in data file.");
         }
         String type = parts[0].trim();
-        int isDone = Integer.parseInt(parts[1].trim());
+        int isDone;
+        try {
+            isDone = Integer.parseInt(parts[1].trim());
+        } catch (NumberFormatException e) {
+            throw new TankaException("Invalid format in data file.");
+        }
         String description = parts[2].trim();
 
         Task task = buildTaskFromFileParts(type, parts, description);

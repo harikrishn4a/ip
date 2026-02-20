@@ -49,9 +49,11 @@ public class Storage {
                 tasks.add(Parser.parseFromFile(line));
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
-            // File disappeared between exists() and open, return tasks as it is
-            return tasks;
+        } catch (IOException e) {
+            if (e instanceof FileNotFoundException) {
+                return tasks;
+            }
+            throw new TankaException("Cannot read the task file: " + e.getMessage());
         }
         return tasks;
     }
