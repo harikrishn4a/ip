@@ -119,6 +119,18 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_markWithExtraSpaces_acceptsTrimmed() throws TankaException {
+        Command c = Parser.parse("mark  1");
+        assertInstanceOf(MarkCommand.class, c);
+    }
+
+    @Test
+    public void parse_markWithMultipleTokens_throwsTankaException() {
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parse("mark 1 2"));
+        assertEquals("Please provide a single task number for mark.", e.getMessage());
+    }
+
+    @Test
     public void parse_unmarkWithNoNumber_throwsTankaException() {
         assertThrows(TankaException.class, () -> Parser.parse("unmark "));
     }
@@ -185,6 +197,26 @@ public class ParserTest {
     }
 
     @Test
+    public void parseTask_deadlineDuplicateBy_throwsTankaException() {
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask(
+                "deadline x /by 2025-01-01 /by 2025-02-01"));
+        assertEquals("Do not specify /by more than once.", e.getMessage());
+    }
+
+    @Test
+    public void parseTask_todoWithPipeInDescription_throwsTankaException() {
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask("todo read | book"));
+        assertEquals("Task description cannot contain \" | \".", e.getMessage());
+    }
+
+    @Test
+    public void parseTask_eventStartAfterEndWhenDates_throwsTankaException() {
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask(
+                "event x /from 2025-02-01 /to 2025-01-01"));
+        assertEquals("Event start must be before end.", e.getMessage());
+    }
+
+    @Test
     public void parseTask_unknownType_throwsTankaException() {
         TankaException e = assertThrows(TankaException.class, () -> Parser.parseTask("other x"));
         assertEquals(Ui.MESSAGE_PARSE_ERROR, e.getMessage());
@@ -224,6 +256,12 @@ public class ParserTest {
     @Test
     public void parseFromFile_tooFewParts_throwsTankaException() {
         TankaException e = assertThrows(TankaException.class, () -> Parser.parseFromFile("T | 0"));
+        assertEquals("Invalid format in data file.", e.getMessage());
+    }
+
+    @Test
+    public void parseFromFile_invalidDoneFlag_throwsTankaException() {
+        TankaException e = assertThrows(TankaException.class, () -> Parser.parseFromFile("T | x | desc"));
         assertEquals("Invalid format in data file.", e.getMessage());
     }
 
