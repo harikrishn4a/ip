@@ -1,4 +1,4 @@
-/* Chat container: padding and consistent spacing */
+/* Chat container: padding and consistent spacing; allow asymmetric alignment */
 #dialogContainer {
     -fx-padding: 12 14 12 14;
     -fx-spacing: 6;
@@ -14,15 +14,30 @@
     -fx-wrap-text: true;
 }
 
-/* Tanka/duke messages: subtle green tint, monospace so numbered lists align (1, 2, 3) */
+/* Tanka/duke messages: left-aligned, subtle green tint, monospace for lists */
+.dialog-box.duke {
+    -fx-alignment: center-left;
+}
 .dialog-box.duke .label {
     -fx-background-color: #e8f5e9;
     -fx-font-family: monospace;
+    -fx-max-width: 360px;
 }
 
-/* User messages: subtle blue tint */
+/* Error messages: distinct warning style so user sees something went wrong */
+.dialog-box.duke.error .label {
+    -fx-background-color: #ffebee;
+    -fx-text-fill: #c62828;
+    -fx-font-family: monospace;
+}
+
+/* User messages: right-aligned, distinct blue bubble (conversation asymmetry) */
+.dialog-box.user {
+    -fx-alignment: center-right;
+}
 .dialog-box.user .label {
     -fx-background-color: #e3f2fd;
+    -fx-max-width: 360px;
 }
 
 /* ScrollPane: remove default border, light background */

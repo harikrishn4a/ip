@@ -51,11 +51,12 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * User dialog: image on the right, text on the left.
+     * User dialog: image on the right, text on the left; aligned right for asymmetry.
      */
     public static DialogBox getUserDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
         db.getStyleClass().add("user");
+        db.setMaxWidth(Double.MAX_VALUE);
         return db;
     }
 
@@ -65,6 +66,17 @@ public class DialogBox extends HBox {
     public static DialogBox getDukeDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
         db.getStyleClass().add("duke");
+        db.flip();
+        return db;
+    }
+
+    /**
+     * Tanka error dialog: same layout as duke but with error styling (e.g. red/warning).
+     */
+    public static DialogBox getDukeErrorDialog(String text, Image img) {
+        DialogBox db = new DialogBox(text, img);
+        db.getStyleClass().add("duke");
+        db.getStyleClass().add("error");
         db.flip();
         return db;
     }
