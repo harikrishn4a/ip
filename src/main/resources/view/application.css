@@ -1,25 +1,28 @@
+/* Chill and Reliable Task Buddy: soft palette, relaxed feel */
+
 /* Chat container: padding and consistent spacing; allow asymmetric alignment */
 #dialogContainer {
     -fx-padding: 12 14 12 14;
     -fx-spacing: 6;
 }
 
-/* Bubble base: padding and line spacing for readability */
+/* Bubble base: padding and line spacing; clean sans-serif for readability */
 .dialog-box .label {
     -fx-padding: 10 14 10 14;
     -fx-background-radius: 12;
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #f5f5f5;
     -fx-font-size: 13px;
     -fx-line-spacing: 2px;
     -fx-wrap-text: true;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
 }
 
-/* Tanka/duke messages: left-aligned, subtle green tint, monospace for lists */
+/* Tanka/duke messages: left-aligned, soft teal tint, monospace for lists */
 .dialog-box.duke {
     -fx-alignment: center-left;
 }
 .dialog-box.duke .label {
-    -fx-background-color: #e8f5e9;
+    -fx-background-color: #e0f2f1;
     -fx-font-family: monospace;
     -fx-max-width: 360px;
 }
@@ -31,7 +34,7 @@
     -fx-font-family: monospace;
 }
 
-/* User messages: right-aligned, distinct blue bubble (conversation asymmetry) */
+/* User messages: right-aligned, soft blue (conversation asymmetry) */
 .dialog-box.user {
     -fx-alignment: center-right;
 }
@@ -40,9 +43,9 @@
     -fx-max-width: 360px;
 }
 
-/* ScrollPane: remove default border, light background */
+/* ScrollPane: creamy background for relaxed feel */
 .scroll-pane {
-    -fx-background-color: #fafafa;
+    -fx-background-color: #faf8f5;
     -fx-background-insets: 0;
 }
 

@@ -24,7 +24,7 @@ public class Main extends Application {
             scene.getStylesheets().add(Main.class.getResource("/view/application.css").toExternalForm());
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setTanka(tanka);
-            stage.setTitle("Tanka");
+            stage.setTitle("Tanka – Your Task Buddy");
             stage.setResizable(true);
             stage.setMinWidth(380.0);
             stage.setMinHeight(400.0);

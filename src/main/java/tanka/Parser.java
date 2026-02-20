@@ -60,7 +60,7 @@ public class Parser {
                 || trimmed.startsWith(PREFIX_EVENT)) {
             return new AddCommand(trimmed);
         } else {
-            throw new TankaException("Sorry I don't understand what you mean!");
+            throw new TankaException(Ui.MESSAGE_PARSE_ERROR);
         }
     }
 
@@ -111,7 +111,7 @@ public class Parser {
         } else if (userInput.startsWith(PREFIX_EVENT)) {
             return parseEvent(userInput);
         }
-        throw new TankaException("Sorry! I don't understand what you mean!");
+        throw new TankaException(Ui.MESSAGE_PARSE_ERROR);
     }
 
     private static Task parseTodo(String userInput) throws TankaException {
