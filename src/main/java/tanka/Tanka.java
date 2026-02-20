@@ -70,6 +70,45 @@ public class Tanka {
     }
 
     /**
+     * Result of processing user input for the GUI: message text and whether it is an error.
+     */
+    public static class GuiResponse {
+        private final String message;
+        private final boolean error;
+
+        public GuiResponse(String message, boolean error) {
+            this.message = message;
+            this.error = error;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public boolean isError() {
+            return error;
+        }
+    }
+
+    /**
+     * Generates a response for the given user input for use in the GUI.
+     * Returns a GuiResponse so the GUI can style errors differently.
+     *
+     * @param input raw user command (e.g. "list", "todo read book")
+     * @return GuiResponse with message and isError flag
+     */
+    public GuiResponse getResponseWithStatus(String input) {
+        GuiUi guiUi = new GuiUi();
+        try {
+            Command c = Parser.parse(input);
+            c.execute(tasks, guiUi, storage);
+            return new GuiResponse(guiUi.getResponseAndClear(), false);
+        } catch (TankaException e) {
+            return new GuiResponse(e.getMessage(), true);
+        }
+    }
+
+    /**
      * Generates a response for the given user input for use in the GUI.
      * Parses the input, executes the command, and returns the response string.
      *
@@ -77,14 +116,7 @@ public class Tanka {
      * @return the response string to show in the chat, or error message if parsing/execution fails
      */
     public String getResponse(String input) {
-        GuiUi guiUi = new GuiUi();
-        try {
-            Command c = Parser.parse(input);
-            c.execute(tasks, guiUi, storage);
-            return guiUi.getResponseAndClear();
-        } catch (TankaException e) {
-            return e.getMessage();
-        }
+        return getResponseWithStatus(input).getMessage();
     }
 
     /**

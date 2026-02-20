@@ -47,16 +47,19 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Creates two dialog boxes (user and Tanka reply) and appends them to the dialog container.
+     * Error responses are shown in a distinct error-style bubble.
      * Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = tanka.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
-        );
+        Tanka.GuiResponse response = tanka.getResponseWithStatus(input);
+        dialogContainer.getChildren().add(DialogBox.getUserDialog(input, userImage));
+        if (response.isError()) {
+            dialogContainer.getChildren().add(DialogBox.getDukeErrorDialog(response.getMessage(), dukeImage));
+        } else {
+            dialogContainer.getChildren().add(DialogBox.getDukeDialog(response.getMessage(), dukeImage));
+        }
         userInput.clear();
     }
 }
