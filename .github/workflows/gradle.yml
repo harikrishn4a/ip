@@ -28,6 +28,6 @@ jobs:
         if: runner.os != 'Windows'
 
       - name: Build and check with Gradle (Windows)
-        run: gradlew.bat check
-        shell: cmd
+        run: ./gradlew check
+        shell: bash
         if: runner.os == 'Windows'
