@@ -39,8 +39,7 @@ public class Storage {
             return tasks;
         }
 
-        try {
-            Scanner scanner = new Scanner(file);
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (line.isEmpty()) {
@@ -48,7 +47,6 @@ public class Storage {
                 }
                 tasks.add(Parser.parseFromFile(line));
             }
-            scanner.close();
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
                 return tasks;
